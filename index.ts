@@ -1,5 +1,5 @@
 import {
-    _, Context, db, Handler, NotFoundError,ObjectId ,paginate, param, PermissionError, PRIV, Types
+    _, Context, db, Handler, NotFoundError,ObjectId , param, PermissionError, PRIV, Types
 } from 'hydrooj';
 
 import { deleteUserCache } from 'hydrooj/src/model/user';
@@ -43,7 +43,7 @@ global.Hydro.model.userBadge = UserBadgeModel;
 global.Hydro.model.badge = BadgeModel;
 
 async function setUserBadge(userId:number, badgeId: number, badge: String): Promise<number> {
-    const result = (await collusr.findOneAndUpdate({_id: userId}, { $set: { badgeId: badgeId, badge: badge } })).value;
+    const result = (await collusr.findOneAndUpdate({_id: userId}, { $set: { badgeId: badgeId, badge: badge } }));
     if (result) {
         await deleteUserCache(result);
     }
@@ -59,7 +59,7 @@ async function resetBadge(badgeId: number, badge: String): Promise<number> {
 }
 
 async function unsetUserBadge(userId: number): Promise<number> {
-    const result = (await collusr.findOneAndUpdate({_id: userId}, { $unset: { badgeId: '',badge:'' } })).value;
+    const result = (await collusr.findOneAndUpdate({_id: userId}, { $unset: { badgeId: '',badge:'' } }));
     if (result) {
         await deleteUserCache(result);
     }
@@ -176,7 +176,7 @@ async function BadgeDel(badgeId: number): Promise<number> {
 class UserBadgeManageHandler extends Handler {
     @param('page', Types.PositiveInt, true)
     async get(domainId:string, page = 1, userId = this.user._id) {
-        const[ddocs, dpcount] = await paginate(
+        const[ddocs, dpcount] = await this.ctx.db.paginate(
             await UserBadgeModel.userBadgeGetMuilt(userId),
             page,
             10
@@ -209,7 +209,7 @@ class UserBadgeManageHandler extends Handler {
 class BadgeManageHandler extends Handler {
     @param('page', Types.PositiveInt, true)
     async get(domainId:string, page = 1) {
-        const[ddocs, dpcount] = await paginate(
+        const[ddocs, dpcount] = await this.ctx.db.paginate(
             await BadgeModel.BadgeGetMuilt(),
             page,
             10
