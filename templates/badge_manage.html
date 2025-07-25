@@ -2,50 +2,50 @@
 {% import "components/paginator.html" as paginator with context %}
 {% block manage_content %}
 <div class="section">
-    <div class="section__header">
-        <h1 class="section__title">{{ _('badge_manage')}}</h1>
-        <a href="/badge/add" class="section__tools">
-            <button class="primary rounded button">{{ _('badge_add') }}</button>
-        </a>
-    </div>
-    <div class="section__body no-padding">
-        {% if not ddocs.length %}
-        {{ nothing.render('Sorry, there are no badges.') }}
-        {% else %}
-        <div class="section__table-container">
-            <table class="data-table section__table-heade">
-              <colgroup>
-                <col class="col--id">
-                <col class="col--title">
-                <col class="col--preview">
-                <col class="col--actions">
-              </colgroup>
-              <thead>
-                <tr>
-                  <th class="col--id">{{ _('badge ID') }}</th>
-                  <th class="col--title">{{ _('badge title') }}</th>
-                  <th class="col--preview">{{ _('badge preview') }}</th>
-                  <th class="col--actions">{{ _('Action') }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {%- for ddoc in ddocs -%}
-                <tr>
-                  <td class="col--id">{{ ddoc._id }}</td>
-                  <td class="col--title">{{ ddoc.title }}</td>
-                  <td class="col--preview">
-                    <a href="/badge/{{ ddoc._id }}" class="user-profile-badge v-center" style="background-color:{{ ddoc.backgroundColor }};color:{{ ddoc.fontColor }};" data-tooltip="{{ ddoc.title }}">{{ ddoc.short }}</a>
-                  </td>
-                  <td class="col--actions">      
-                    <a href="/badge/{{ ddoc._id }}/edit" class="typo-a">{{ _('Edit') }}</a>
-                  </td>
-                </tr>
-                {%- endfor -%}
-              </tbody>
-            </table>
-            {{ paginator.render(page, dpcount) }}
-        </div>
-	{% endif %}
-    </div>
+  <div class="section__header">
+      <h1 class="section__title">{{ _('badge_manage') }}</h1>
+      <a href="/badge/add" class="section__tools">
+        <button class="primary rounded button">{{ _('badge_add') }}</button>
+      </a>
+  </div>
+  <div class="section__body no-padding">
+    {% if not ddocs.length %}
+      {{ nothing.render('Sorry, there are no badges.') }}
+    {% else %}
+      <div class="section__table-container">
+        <table class="data-table section__table-heade">
+          <colgroup>
+            <col class="col--id">
+            <col class="col--title">
+            <col class="col--preview">
+            <col class="col--actions">
+          </colgroup>
+          <thead>
+            <tr>
+              <th class="col--id">{{ _('badge ID') }}</th>
+              <th class="col--title">{{ _('badge title') }}</th>
+              <th class="col--preview">{{ _('badge preview') }}</th>
+              <th class="col--actions">{{ _('Action') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for ddoc in ddocs -%}
+              <tr>
+                <td class="col--id">{{ ddoc._id }}</td>
+                <td class="col--title">{{ ddoc.title }}</td>
+                <td class="col--preview">
+                  <a href="/badge/{{ ddoc._id }}" class="user-profile-badge v-center" style="background-color:{{ ddoc.backgroundColor }};color:{{ ddoc.fontColor }};" data-tooltip="{{ ddoc.title }}">{{ ddoc.short }}</a>
+                </td>
+                <td class="col--actions">      
+                  <a href="/badge/{{ ddoc._id }}/edit" class="typo-a">{{ _('Edit') }}</a>
+                </td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+        {{ paginator.render(page, dpcount) }}
+      </div>
+	  {% endif %}
+  </div>
 </div>
-{% endblock%}
+{% endblock %}

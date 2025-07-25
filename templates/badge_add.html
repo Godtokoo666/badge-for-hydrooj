@@ -1,70 +1,70 @@
 {% extends "layout/basic.html" %}
 {% block content %}
 <div class="row">
-    <div class="medium-9 columns">
-        <div class="section">
-            <div class="section__header">
-                <h2 class="section__title">{{ _('badge_add') }}</h2>
-            </div>
-            <div class="section__body">
-                <form method="post">
-                    {{ form.form_text({
-                        columns:12,
-                        label:('{0}(另作徽章悬停时内容)').format(_('badge title')),
-                        name:'title',
-                        placeholder:_('title'),
-                        autofocus:true
-                    }) }}
-                    <div class="row">
-                    {{ form.form_text({
-                        columns:3,
-                        label:'badge short',
-                        name:'short',
-                        placeholder:('显示名，建议3字以内'),
-                        autofocus:true,
-                        row:false
-                    }) }}
-                    {{ form.form_text({
-                        columns:3,
-                        label:'badge background color',
-                        name:'backgroundColor',
-                        placeholder:_('hex color code'),
-                        autofocus:true,
-                        row:false
-                    }) }}
-                    {{ form.form_text({
-                        columns:3,
-                        label:'badge font color',
-                        name:'fontColor',
-                        placeholder:_('hex color code'),
-                        autofocus:true,
-                        row:false
-                    }) }}
-                    </div>
-                    {{ form.form_text({
-                        columns:12,
-                        label:'badge assignment',
-                        name:'users',
-                        help_text:('{0}欲分配的用户').format(_('Badge'))
-                    }) }}
-                    {{ form.form_textarea({
-                        columns:null,
-                        label:'Description',
-                        name:'content',
-                        markdown:true
-                    }) }}
-                    <button name="operation" value="add" type="submit" class="rounded primary button">
-                    {{ _('Add') }}
-                    </button>
-                    <button type="button" class="rounded button" onclick="window.history.go(-1)">
-                    {{ _('Cancel') }}
-                    </button>
-                </form>
-            </div>
-        </div>
+  <div class="medium-9 columns">
+    <div class="section">
+      <div class="section__header">
+        <h1 class="section__title">{{ _('badge_add') }}</h1>
+      </div>
+      <div class="section__body">
+        <form method="post">
+          {{ form.form_text({
+            columns:12,
+            label:('{0} ({1})').format(_('badge title'), _('Also used as badge hover text')),
+            name:'title',
+            placeholder:_('title'),
+            autofocus:true
+          }) }}
+          <div class="row">
+            {{ form.form_text({
+              columns:3,
+              label:'badge short',
+              name:'short',
+              placeholder:_('Display name, max 3 chars recommended'),
+              autofocus:true,
+              row:false
+            }) }}
+            {{ form.form_text({
+              columns:3,
+              label:'badge background color',
+              name:'backgroundColor',
+              placeholder:_('hex color code'),
+              autofocus:true,
+              row:false
+            }) }}
+            {{ form.form_text({
+              columns:3,
+              label:'badge font color',
+              name:'fontColor',
+              placeholder:_('hex color code'),
+              autofocus:true,
+              row:false
+            }) }}
+          </div>
+          {{ form.form_text({
+            columns:12,
+            label:'badge assignment',
+            name:'users',
+            help_text:_('User to assign this badge')
+          }) }}
+          {{ form.form_textarea({
+            columns:null,
+            label:'Description',
+            name:'content',
+            markdown:true
+          }) }}
+          <button name="operation" value="add" type="submit" class="rounded primary button">
+            {{ _('Add') }}
+          </button>
+          <button type="button" class="rounded button" onclick="window.history.go(-1)">
+            {{ _('Cancel') }}
+          </button>
+        </form>
+      </div>
     </div>
-    <div class="medium-3 columns">
-        {% include 'components/md_hint.html' %}
-    </div>
+  </div>
+  <div class="medium-3 columns">
+    {% include 'components/md_hint.html' %}
+  </div>
 </div>
 {% endblock %}

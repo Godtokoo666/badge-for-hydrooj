@@ -1,84 +1,85 @@
 {% extends "layout/basic.html" %}
 {% block content %}
 <div class="row">
-    <div class="medium-12 columns">
-        <div class="section">
-            <div class="section__header">
-                <h1 class="section__title">{{ _('user_badge_manage') }}</h1>
-            </div>
-            {% if not ddocs.length %}
-            {{ nothing.render("Sorry, You don't have any badge.") }}
-            {% else %}
-            <div class="section__body">
-                <blockquote class="note typo">
-                    <ul>
-                      <li>鼠标悬停至徽章可查看徽章标题，单击徽章可打开徽章介绍页。</li>
-                      <li>对徽章存续等有任何问题的，请联系站点管理员。</li>
-                    </ul>
-                </blockquote>
-                <div class="row">
-                    <div class="medium-9 columns">
-                        <h3>当前徽章：
-                            {% if current_badge %}
-                                {{user.render_inline(handler.user,badge=false)}}
-                                {% set _badge = current_badge.split('#') %}
-                                <a href="/badge/{{_badge[0]}}" class="user-profile-badge v-center" style="background-color:#{{ _badge[2] }}{% if _badge[3] %};color:#{{ _badge[3] }}{% endif %}" {%if _badge[4] %} data-tooltip="{{ _badge[4] }}" {% endif %} >{{ _badge[1] }}</a>
-                            {% else %}
-                                您暂未启用任何徽章
-                            {% endif %}
-                        </h3>
-                    </div>
-                    <div class="medium-3 columns" style="display: flex;">
-                    重置徽章：
-                        <form method="post">
-                            <button class="typo-a" name="operation" value="reset" type="submit">{{ _('Reset') }}</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="section__body no-padding">
-                <div class="section__table-container">
-                    <table class="data-table section__table-heade">
-                    <colgroup>
-                        <col class="col--id">
-                        <col class="col--title">
-                        <col class="col--preview">
-                        <col class="col--getat">
-                        <col class="col--actions">
-                    </colgroup>
-                    <thead>
-                        <tr>
-                        <th class="col--id">{{ _('badge ID') }}</th>
-                        <th class="col--title">{{ _('badge title') }}</th>
-                        <th class="col--preview">{{ _('badge preview') }}</th>
-                        <th class="col--getat">{{ _('get at') }}</th>
-                        <th class="col--actions">{{ _('Action') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {%- for ddoc in ddocs -%}
-                        <tr>
-                        <td class="col--id">{{ ddoc.badgeId }}</td>
-                        <td class="col--title">{{ ddoc.badge.title }}</td>
-                        <td class="col--preview">
-                            <a href="/badge/{{ ddoc.badgeId }}" class="user-profile-badge v-center" style="background-color:{{ ddoc.badge.backgroundColor }};color:{{ ddoc.badge.fontColor }};" data-tooltip="{{ ddoc.badge.title }}">{{ ddoc.badge.short }}</a>
-                        </td>
-                        <td class="col--getat">{{ datetimeSpan(ddoc.getAt, false, 'YYYY-M-D')|safe}}</td>
-                        <td class="col--actions">
-                            <form method="post">
-                                <input type="hidden" name="badgeId" value="{{ ddoc.badgeId }}">
-                                <button class="typo-a" name="operation" value="enable" type="submit">{{ _('Enable') }}</button>
-                            </form>
-                        </td>
-                        </tr>
-                        {%- endfor -%}
-                    </tbody>
-                    </table>
-                    {{ paginator.render(page, dpcount) }}
-                </div>
-            </div>
-            {% endif %}
+  <div class="medium-12 columns">
+    <div class="section">
+      <div class="section__header">
+        <h1 class="section__title">{{ _('user_badge_manage') }}</h1>
+      </div>
+      {% if not ddocs.length %}
+      {{ nothing.render("Sorry, You don't have any badge.") }}
+      {% else %}
+      <div class="section__body">
+        <blockquote class="note typo">
+          <ul>
+          <li>{{ _('Hover over a badge to view its title; click a badge to open its introduction page.') }}</li>
+          <li>{{ _('If you have any questions about badge validity, please contact the administrator.') }}</li>
+          </ul>
+        </blockquote>
+        <div class="row">
+          <div class="medium-9 columns">
+            <h3>{{ _('Current Badge') }}:&nbsp;
+              {% if current_badge %}
+              {{ user.render_inline(handler.user, badge=false) }}
+              {% set _badge = current_badge.split('#') %}
+              <a href="/badge/{{_badge[0]}}" class="user-profile-badge v-center" style="background-color:#{{ _badge[2] }}{% if _badge[3] %};color:#{{ _badge[3] }}{% endif %}" {%if _badge[4] %} data-tooltip="{{ _badge[4] }}" {% endif %} >{{ _badge[1] }}</a>
+              {% else %}
+              {{ _('No Badge Enabled') }}
+              {% endif %}
+            </h3>
+          </div>
+          <div class="medium-3 columns" style="display: flex;">
+            {{ _('Reset Badge') }}:&nbsp;&nbsp;
+            <form method="post">
+              <button class="typo-a" name="operation" value="reset" type="submit">{{ _('Reset') }}</button>
+            </form>
+          </div>
         </div>
+      </div>
+      <div class="section__body no-padding">
+        <div class="section__table-container">
+          <table class="data-table section__table-heade">
+          <colgroup>
+            <col class="col--id">
+            <col class="col--title">
+            <col class="col--preview">
+            <col class="col--getat">
+            <col class="col--actions">
+          </colgroup>
+          <thead>
+            <tr>
+            <th class="col--id">{{ _('badge ID') }}</th>
+            <th class="col--title">{{ _('badge title') }}</th>
+            <th class="col--preview">{{ _('badge preview') }}</th>
+            <th class="col--getat">{{ _('get at') }}</th>
+            <th class="col--actions">{{ _('Action') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for ddoc in ddocs -%}
+            {%- set bdoc = bdocs[ddoc.badgeId|string] -%}
+            <tr>
+            <td class="col--id">{{ ddoc.badgeId }}</td>
+            <td class="col--title">{{ bdoc.title }}</td>
+            <td class="col--preview">
+              <a href="/badge/{{ ddoc.badgeId }}" class="user-profile-badge v-center" style="background-color:{{ bdoc.backgroundColor }};color:{{ bdoc.fontColor }};" data-tooltip="{{ bdoc.title }}">{{ bdoc.short }}</a>
+            </td>
+            <td class="col--getat">{{ datetimeSpan(ddoc.getAt, false, 'YYYY-M-D')|safe}}</td>
+            <td class="col--actions">
+              <form method="post">
+                <input type="hidden" name="badgeId" value="{{ ddoc.badgeId }}">
+                <button class="typo-a" name="operation" value="enable" type="submit">{{ _('Enable') }}</button>
+              </form>
+            </td>
+            </tr>
+            {%- endfor -%}
+          </tbody>
+          </table>
+          {{ paginator.render(page, dpcount) }}
+        </div>
+      </div>
+      {% endif %}
     </div>
+  </div>
 </div>
-{% endblock%}
+{% endblock %}
