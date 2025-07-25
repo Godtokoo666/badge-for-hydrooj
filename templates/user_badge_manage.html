@@ -22,7 +22,7 @@
               {% if current_badge %}
               {{ user.render_inline(handler.user, badge=false) }}
               {% set _badge = current_badge.split('#') %}
-              <a href="/badge/{{_badge[0]}}" class="user-profile-badge v-center" style="background-color:#{{ _badge[2] }}{% if _badge[3] %};color:#{{ _badge[3] }}{% endif %}" {%if _badge[4] %} data-tooltip="{{ _badge[4] }}" {% endif %} >{{ _badge[1] }}</a>
+              <a href="/badge/{{ _badge[0] }}" class="user-profile-badge v-center" style="background-color:#{{ _badge[2] }}{% if _badge[3] %};color:#{{ _badge[3] }}{% endif %}" {%if _badge[4] %} data-tooltip="{{ _badge[4] }}" {% endif %} >{{ _badge[1] }}</a>
               {% else %}
               {{ _('No Badge Enabled') }}
               {% endif %}
