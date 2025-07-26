@@ -1,25 +1,33 @@
 {% extends "layout/basic.html" %}
 {% block content %}
 <div class="row">
-    <div class="medium-12 columns">
-        <div class="section">
-            <div class="section__header">
-                <div class="section__title">
-                    <h2 style="text-align: center;">{{ badge.title }}</h1>
-                </div>
-            </div>
-            <div class="section__body">
-                <div class="typo richmedia topic__content" data-emoji-enabled>
-                    {{ badge.content|markdown|safe }}
-                </div>
-            </div>
-            <div class="section__footer" style="display:flex;justify-content: space-between;">
-		    <h3>{{ _('badge preview')}}：{{ user.render_inline(handler.user,badge=false)}}
-			<span class="user-profile-badge v-center" style="background-color:{{ badge.backgroundColor }};color:{{ badge.fontColor }};" data-tooltip="{{ badge.title }}">{{ badge.short }}</span>
-		    </h3> 
-		    <h3>{{_('create at')}}：{{ datetimeSpan(badge.createAt, false, 'YYYY-M-D')|safe}}</h3>
-	    </div>
+  <div class="medium-12 columns">
+    <div class="section">
+      <div class="section__header">
+        <div class="section__title">
+          <h2 style="text-align: center;">{{ badge.title }}</h2>
         </div>
+      </div>
+      <div class="section__body">
+        <div class="typo richmedia topic__content" data-emoji-enabled>
+          {{ badge.content|markdown|safe }}
+        </div>
+      </div>
+      <div class="section__footer" style="display:flex;">
+        <h3 style="flex-shrink:0;padding-right:5px;">{{ _('Badge Owners') }}：</h3>
+        <h3 style="display:flex;flex-wrap:wrap;gap:12px;">
+          {%- for uid in badge.users -%}
+          {{ user.render_inline(udict[uid], badge=false) }}
+          {%- endfor -%}
+        </h3>
+	    </div>
+      <div class="section__footer" style="display:flex;justify-content: space-between;">
+        <h3>{{ _('badge preview') }}：{{ user.render_inline(handler.user, badge=false) }}
+          <span class="user-profile-badge v-center" style="background-color:{{ badge.backgroundColor }};color:{{ badge.fontColor }};" data-tooltip="{{ badge.title }}">{{ badge.short }}</span>
+        </h3> 
+        <h3>{{_('create at') }}：{{ datetimeSpan(badge.createAt, false, 'YYYY-MM-DD')|safe }}</h3>
+	    </div>
     </div>
+  </div>
 </div>
 {% endblock %}
