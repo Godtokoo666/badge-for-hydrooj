@@ -27,13 +27,11 @@ class UserBadgeManageHandler extends Handler {
 
     @param('badgeId', Types.PositiveInt, true)
     async postEnable(_: string, badgeId: number) {
-        console.log(1);
         await UserBadgeModel.userBadgeSel(this.ctx, this.user._id, badgeId);
         this.response.redirect = this.url('user_badge_manage');
     }
 
     async postReset(_: string) {
-        console.log(2);
         await UserBadgeModel.userBadgeUnset(this.ctx, this.user._id);
         this.response.redirect = this.url('user_badge_manage');
     }
