@@ -4,6 +4,8 @@ import { Badge } from './model';
 const UserBadgeModel = global.Hydro.model.userBadge;
 const BadgeModel = global.Hydro.model.badge;
 
+const user = global.Hydro.model.user;
+
 class UserBadgeManageHandler extends Handler {
 
     @param('page', Types.PositiveInt, true)
@@ -102,11 +104,12 @@ class BadgeEditHandler extends Handler {
 class BadgeDetailHandler extends Handler {
     
     @param('id', Types.PositiveInt, true)
-    async get(_: string, id: number) {
+    async get(domainId: string, id: number) {
         const badge = await BadgeModel.badgeGet(this.ctx, id);
         if (!badge) throw new NotFoundError(`Badge ${id} is not exist!`);
+        const udict = await user.getList(domainId, badge.users);
         this.response.template = 'badge_detail.html';
-        this.response.body = { badge };
+        this.response.body = { badge, udict };
     }
 }
 
@@ -140,6 +143,7 @@ export async function apply(ctx: Context) {
         'User to assign this badge': '欲分配此徽章的用户',
         'Display name, max 3 chars recommended': '显示名，建议3字以内',
         'Also used as badge hover text': '另作徽章悬停时内容',
+        'Badge Owners': '持有徽章',
         'Sorry, there are no badges.': '抱歉，这里没有徽章。',
         'Sorry, You don\'t have any badge.': '抱歉，你还没有徽章。',
         'Hover over a badge to view its title; click a badge to open its introduction page.': '鼠标悬停至徽章可查看徽章标题，单击徽章可打开徽章介绍页。',
@@ -169,6 +173,7 @@ export async function apply(ctx: Context) {
         'User to assign this badge': 'User to assign this badge',
         'Display name, max 3 chars recommended': 'Display name, max 3 chars recommended',
         'Also used as badge hover text': 'Also used as badge hover text',
+        'Badge Owners': 'Badge Owners',
         'Sorry, there are no badges.': 'Sorry, there are no badges.',
         'Sorry, You don\'t have any badge.': 'Sorry, You don\'t have any badge.',
         'Hover over a badge to view its title; click a badge to open its introduction page.': 'Hover over a badge to view its title; click a badge to open its introduction page.',

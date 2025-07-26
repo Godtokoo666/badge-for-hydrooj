@@ -36,7 +36,7 @@
             <td class="col--preview">
               <a href="/badge/{{ ddoc._id }}" class="user-profile-badge v-center" style="background-color:{{ ddoc.backgroundColor }};color:{{ ddoc.fontColor }};" data-tooltip="{{ ddoc.title }}">{{ ddoc.short }}</a>
             </td>
-            <td class="col--actions">      
+            <td class="col--actions">
               <a href="/badge/{{ ddoc._id }}/edit" class="typo-a">{{ _('Edit') }}</a>
             </td>
           </tr>
@@ -45,7 +45,7 @@
       </table>
       {{ paginator.render(page, dpcount) }}
     </div>
-	  {% endif %}
+    {% endif %}
   </div>
 </div>
 {% endblock %}

@@ -18,7 +18,7 @@
         </blockquote>
         <div class="row">
           <div class="medium-9 columns">
-            <h3>{{ _('Current Badge') }}:&nbsp;
+            <h3>{{ _('Current Badge') }}：
               {% if current_badge %}
               {{ user.render_inline(handler.user, badge=false) }}
               {% set _badge = current_badge.split('#') %}
@@ -29,7 +29,7 @@
             </h3>
           </div>
           <div class="medium-3 columns" style="display: flex;">
-            {{ _('Reset Badge') }}:&nbsp;&nbsp;
+            {{ _('Reset Badge') }}：
             <form method="post">
               <button class="typo-a" name="operation" value="reset" type="submit">{{ _('Reset') }}</button>
             </form>
@@ -64,7 +64,7 @@
             <td class="col--preview">
               <a href="/badge/{{ ddoc.badgeId }}" class="user-profile-badge v-center" style="background-color:{{ bdoc.backgroundColor }};color:{{ bdoc.fontColor }};" data-tooltip="{{ bdoc.title }}">{{ bdoc.short }}</a>
             </td>
-            <td class="col--getat">{{ datetimeSpan(ddoc.getAt, false, 'YYYY-M-D')|safe}}</td>
+            <td class="col--getat">{{ datetimeSpan(ddoc.getAt, false, 'YYYY-MM-DD')|safe}}</td>
             <td class="col--actions">
               <form method="post">
                 <input type="hidden" name="badgeId" value="{{ ddoc.badgeId }}">
