@@ -14,8 +14,7 @@
         </div>
       </div>
       <div class="section__footer" style="display:flex;">
-        <h3 style="flex-shrink:0;padding-right:5px;">{{ _('Badge Owners') }}：</h3>
-        <h3 style="display:flex;flex-wrap:wrap;gap:12px;">
+        <h3>{{ _('Badge Owners') }}：
           {%- for uid in badge.users -%}
           {{ user.render_inline(udict[uid], badge=false) }}
           {%- endfor -%}
